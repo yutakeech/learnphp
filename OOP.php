@@ -19,18 +19,40 @@ class Car {
     public $transmission;
     private $fuelSupply;
     private $airSupply;
+
+    public function getFuelSupply()
+    {
+        return $this->fuelSupply;
+    }
+
+    public function setFuelSupply()
+    {
+        $this->fuelSupply = $fuelSupply;
+    }
+
+    public function getAirSupply()
+    {
+        return $this->airSupply;
+    }
+
+    public function setAirSupply()
+    {
+        $this->airSupply = $airSupply;
+    }
+
+    public function __construct($handling, $transmission)
+    {
+        $this->handling = $handling;
+        $this->transmission = $transmission;
+    }
 }
 
-$audi = new Car {
-    $audi->handling="normal";
-    $audi->transmission="CVT";
-}
+$audi = new Car();
+
+$audi->handling="sharp";
+$audi->transmission="CVT";
+
 
 print_r($audi);
 
-
-// Попытка внести изменения и отправить их
-
-$bmw = new Car;
-
-// Ещё одно изменение
+$renault = new Car(normal, mechanical);
