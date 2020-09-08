@@ -8,7 +8,7 @@
 
 2. К существующему классу создать дочерний
 2.1 Создать дополнительные свойства, расширить конструктор для заполнения этих свойств
-2.2 Добавить методы, которые путём арифметики получать значение из двух свойств - значение для третьего - метод приватный, должен вызываться в другом методе или в конструкторе
+2.2 Добавить методы, которые путём арифметики будут получать значение из двух свойств - значение для третьего - метод приватный, должен вызываться в другом методе или в конструкторе
 
 3. Создать ещё 1 класс, наследуемый от предыдущего, который будет наследовать конструктор от самого старшего класса - найти ошибки в структуре - устранить
 
@@ -25,7 +25,7 @@ class Car {
         return $this->fuelSupply;
     }
 
-    public function setFuelSupply()
+    public function setFuelSupply($fuelSupply)
     {
         $this->fuelSupply = $fuelSupply;
     }
@@ -35,7 +35,7 @@ class Car {
         return $this->airSupply;
     }
 
-    public function setAirSupply()
+    public function setAirSupply($airSupply)
     {
         $this->airSupply = $airSupply;
     }
@@ -47,7 +47,12 @@ class Car {
     }
 }
 
-$audi = new Car();
+$audi = new Car("normal", "CVT");
+
+$audi->setAirSupply("400");
+$audi->setFuelSupply("34");
+
+print_r($audi);
 
 $audi->handling="sharp";
 $audi->transmission="CVT";
@@ -55,4 +60,32 @@ $audi->transmission="CVT";
 
 print_r($audi);
 
-$renault = new Car(normal, mechanical);
+$renault = new Car('normal', "mechanical");
+
+print_r($renault);
+
+class Bus extends Car
+{
+    function __construct($handling, $transmission, $persons, $baggage)
+    {
+        parent::__construct($handling, $transmission);
+        $this->person = $persons;
+        $this->baggage = $baggage;
+    }
+
+    private function sum($persons, $baggage)
+    {
+        return $persons + $baggage;
+    }
+
+    public function catchSum($persons, $baggage)
+    {
+        return $this->sum($persons, $baggage);
+    }
+}
+
+$ikarus = new Bus("horror", "mechanical", "26", "10");
+
+$ikarus->catchSum("16", "25");
+
+print_r($ikarus);
