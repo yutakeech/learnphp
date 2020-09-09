@@ -1,3 +1,4 @@
+
 <?php
 /*
 1.Необходимо создать класс
@@ -66,6 +67,8 @@ print_r($renault);
 
 class Bus extends Car
 {
+    public $persons;
+    public $baggage;
     function __construct($handling, $transmission, $persons, $baggage)
     {
         parent::__construct($handling, $transmission);
@@ -78,14 +81,20 @@ class Bus extends Car
         return $persons + $baggage;
     }
 
-    public function catchSum($persons, $baggage)
+    public function getSum($persons, $baggage)
     {
         return $this->sum($persons, $baggage);
     }
 }
 
 $ikarus = new Bus("horror", "mechanical", "26", "10");
-
-$ikarus->catchSum("16", "25");
+$ikarus->getSum("16", "25");
 
 print_r($ikarus);
+
+class IntercityBus extends Bus
+{
+  parent::__construct($handling, $transmission);
+}
+
+$newline = new IntercityBus;
