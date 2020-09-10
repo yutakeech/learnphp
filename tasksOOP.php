@@ -106,12 +106,7 @@ class Worker
 
     private function checkAge($age)
     {
-        if($age >= 1 && $age <= 100)
-        {
-            return true;
-        } else {
-            return false;
-        }
+        return $age >= 1 and $age <=100
     }
     public function setAge($age)
     {
@@ -271,33 +266,62 @@ class Student extends User
     }
 }
 
+// Принято, чтобы каждый класс лежал в собственном файле с названием, идентичным названию класса. Для подключения лучше использовать require_once 'имя_класса(он же имя файла).php'; после чего создавать экземпляр класса и работать с ним.
+
 /*
-6. Создайте класс Form - оболочку для создания форм. Он должен иметь методы input, submit, password, textarea, open, close. Каждый метод принимает массив атрибутов.
+Сделайте класс City (город), в котором будут следующие свойства: name (название города), population (количество населения). Создайте 5 объектов класса City, заполните их данными и запишите в массив. Переберите созданный вами массив с городами циклом и выведите города и их население на экран.
+*/
+
+class City
+{
+    public $name;
+    public $population;
+
+    public function __construct($name, $population)
+    {
+        $this->name = $name;
+        $this->population = $population;
+    }
+}
+
+$cities = [
+  new City('Калининград', 500),
+  new City('Новосиборск', 1500),
+  new City('Питер', 8000),
+  new City('Москва', 12000),
+  new City('Пекин', 20000)
+];
+
+foreach($cities as $city)
+{
+  echo $city->name . ' ' . $city->population . "</br>";
+}
+
+/*
+Создайте класс Form - оболочку для создания форм. Он должен иметь методы input, submit, password, textarea, open, close. Каждый метод принимает массив атрибутов.
 Для решения задачи сделайте private метод, который параметром будет принимать массив, например, ['type'=>'text', 'value'=>'!!!'] и делать из него строку с атрибутами, в нашем случае type="text" value="!!!".
 */
 
 class Form
 {
+    // Создадим метод, который преобразует массив в строку
     private function createAttribute($attribute)
     {
+        // Зададим пустую строку
         $attr = "";
-        foreach($attributes as $key=>$value)
+        // Для каждого атрибута, представленного в виде ключ=>значение (массив)
+        foreach($attribute as $key=>$value)
         {
-            $attr = $attr . $key . ' =" ' . $value . ' " ';
+            // Строка будет 'ключ = "значение"'
+            $attr = $attr . $key . ' = "' . $value . '" ';
         }
         return $attr;
     }
 
     public function input($attribute)
     {
-        $attribute = $this->createAttribute($attributes);
-        return '<imput type = "password" ' . $attribute . '>';
-    }
-
-    public function textarea($attribute)
-    {
-        $attribute = $this->createAttribute($attributes);
-        return '<textarea ' . $attributes . '>';
+        $attribute = $this->createAttribute($attribute);
+        return '<' . $attribute . '>';
     }
 
     public function submit($attribute)
@@ -306,14 +330,44 @@ class Form
         return '<input type = "submit" ' . $attribute . '>';
     }
 
+    public function password($attribute)
+    {
+        $attribute = $this->createAttribute($attribute);
+        return '<input type="password" ' . $attribute . '>';
+    }
+
+    public function textarea($attribute)
+    {
+        $attribute = $this->createAttribute($attribute);
+        return '<textarea ' . $attribute . '>';
+    }
+
     public function open($attribute)
     {
         $attribute = $this->createAttribute($attribute);
         return '<form ' . $attribute . '>';
     }
 
-    public function close($attribute)
+    public function close()
     {
         return '</form>';
     }
+}
+
+$form = new Form;
+echo $form->open(['action'=>'index.php', 'method'=>'POST']);
+echo $form->input(['type'=>'text', 'placeholder'=>'Ваше имя', 'name'=>'name']);
+echo $form->password(['placeholder'=>'Ваш пароль', 'name'=>'pass']);
+echo $form->submit(['value'=>'Отправить']);
+echo $form->close();
+
+/*
+8. Создайте класс SmartForm, который будет наследовать от Form из предыдущей задачи и сохранять значения инпутов и textarea после отправки.
+
+То есть если мы сделали форму, нажали на кнопку отправки - то значения из инпутов не должны пропасть. Мало ли что-то пойдет не так, например, форма некорректно заполнена, а введенные данные из нее пропали и их следует вводить заново. Этого следует избегать.
+*/
+
+class SmartForm extends Form
+{
+
 }
