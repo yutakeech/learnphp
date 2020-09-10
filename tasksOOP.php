@@ -298,6 +298,101 @@ foreach($cities as $city)
 }
 
 /*
+Пусть у нас есть класс Student с двумя свойствами - name и course (курс студента).
+Сделаем так, чтобы имя студента приходило параметром при создании объекта, а курс автоматически принимал значение 1:
+Новый курс не будет больше 5.
+*/
+
+class Student
+{
+    private $name;
+    private $course;
+
+    public function __construct($name)
+    {
+        $this->name = $name;
+        $this->course = 1;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    public function transferToNextCourse()
+    {
+      if ($this->course < 5)
+        return $this->course++;
+    }
+}
+
+/*
+Ассоциативный массив.
+Пусть массив $methods будет ассоциативным с ключами method1 и method2:
+<?php
+	$methods = ['method1' => 'getName', 'method2' => 'getAge'];
+?>
+Выведите имя и возраст пользователя с помощью этого массива.
+*/
+
+class User
+{
+    private $name;
+    private $age;
+
+    public function __construct($name, $age)
+    {
+        $this->name = $name;
+        $this->age = $age;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function getAge()
+    {
+        return $this->age;
+    }
+}
+
+$user = new User('Ваня', 30);
+
+$methods = ['method1' => 'getName', 'method2' => 'getAge'];
+echo $user->{$methods['method1']}();
+echo $user->{$methods['method2']}();
+
+/*
+Вызов массива сразу после его использования
+*/
+
+class Arr
+{
+    public $numbers = [];
+
+    public function __construct($numbers)
+    {
+        $this->numbers = $numbers;
+    }
+
+    public function addNumber($number)
+    {
+        $this->numbers[] = $number;
+    }
+
+    public function getSum()
+    {
+        return array_sum($this->numbers);
+    }
+}
+
+echo (new Arr([1, 2, 3]))->getSum() + (new Arr([4, 5, 6]))->getSum();
+
+/*
 Создайте класс Form - оболочку для создания форм. Он должен иметь методы input, submit, password, textarea, open, close. Каждый метод принимает массив атрибутов.
 Для решения задачи сделайте private метод, который параметром будет принимать массив, например, ['type'=>'text', 'value'=>'!!!'] и делать из него строку с атрибутами, в нашем случае type="text" value="!!!".
 */
